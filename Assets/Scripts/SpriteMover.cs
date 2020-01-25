@@ -6,10 +6,13 @@ public class SpriteMover : MonoBehaviour
 {
     private Transform tf;
     public float speed = 1.0f;
+    Vector3 originalPos;
+    bool disabled;
     // Start is called before the first frame update
     void Start()
     {
         tf = gameObject.GetComponent<Transform>();
+        originalPos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
     }
 
     // Update is called once per frame
@@ -73,6 +76,29 @@ public class SpriteMover : MonoBehaviour
             {
                 tf.position = tf.position + Vector3.down * Time.deltaTime * speed;
             }
+        }
+
+        //Will set the player back to the origin with space.
+        if (Input.GetKey(KeyCode.Space))
+        {
+            tf.position = gameObject.transform.position = originalPos;
+        }
+
+        //disables the gameobject
+        if (Input.GetKey(KeyCode.Q))
+            if (disabled == false)
+        {
+            gameObject.SetActive(false);
+            disabled = true;
+        }
+        else if (disabled == true)
+            {
+                gameObject.SetActive(true);
+            }
+        //exits the application
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
         }
 
     }
